@@ -14,7 +14,14 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "autoload": {
+        "psr-4": {
+            "LCloss\\DB\\": "src/"
+        }
+    },
+    "require": {
+        "lcloss/php-env": "^0.0.1"
+    },
     "require-dev": {
         "phpunit/phpunit": "9"
     }

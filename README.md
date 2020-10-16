@@ -1,7 +1,24 @@
 # php-db
 Simple PHP package to manage database
 
+## Requirements
+
+On root folder, create a .env file with these fields:
+
+(Change accordanly your configuration)
+
+```
+[database]
+driver = mysql
+server = localhost
+port   = 3306
+dbname = testdb
+user   = root
+password = 
+```
+
 ## Usage
+
 
 ### Using Database
 

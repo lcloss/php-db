@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd284debc5a72b0bc7ee3018a25c9f81",
-    "packages": [],
+    "content-hash": "4c5ef75619365588ecc0de55caa8ed71",
+    "packages": [
+        {
+            "name": "lcloss/php-env",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcloss/php-env.git",
+                "reference": "4c8a81a956e88354e6e764b8d9a823b1ea882934"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcloss/php-env/zipball/4c8a81a956e88354e6e764b8d9a823b1ea882934",
+                "reference": "4c8a81a956e88354e6e764b8d9a823b1ea882934",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LCloss\\Env\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luciano Closs",
+                    "email": "luciano@devcorner.io",
+                    "homepage": "https://lucianocloss.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple environment package",
+            "homepage": "https://php-env.devcorner.io",
+            "keywords": [
+                ".env",
+                "env",
+                "environment",
+                "php"
+            ],
+            "time": "2020-10-16T22:50:24+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",

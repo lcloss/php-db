@@ -75,7 +75,9 @@ final Class Connection
 
     public static function getInstance(): PDO
     {
-        $env = Environment::getInstance();
+        $path = implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, __DIR__ ), 0, -4 )) . DIRECTORY_SEPARATOR;
+
+        $env = Environment::getInstance('.env', $path);
 
         $database_settings = $env->database;
 
