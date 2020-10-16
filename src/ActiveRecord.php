@@ -37,6 +37,11 @@ class ActiveRecord
         }
     }
 
+    /**
+     * Set PDO connection
+     * @param PDO $connection
+     * @return void
+     */
     public static function setConnection( PDO $connection )
     {
         self::$connection = $connection;
