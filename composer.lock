@@ -4,10 +4,10 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c5ef75619365588ecc0de55caa8ed71",
+    "content-hash": "247ae3a9e2206b2052deaf40a0111283",
     "packages": [
         {
-            "name": "lcloss/php-env",
+            "name": "lcloss/env",
             "version": "v0.0.1",
             "source": {
                 "type": "git",
