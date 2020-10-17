@@ -1,7 +1,7 @@
 {
     "name": "lcloss/db",
     "description": "Simple PHP package to manage database",
-    "keywords": ["php","mysql","pdo"],
+    "keywords": ["php","mysql","pdo", "sgbd"],
     "homepage": "https://php-db.devcorner.io",
     "type": "library",
     "license": "MIT",
