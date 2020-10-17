@@ -1,5 +1,5 @@
 {
-    "name": "lcloss/php-db",
+    "name": "lcloss/db",
     "description": "Simple PHP package to manage database",
     "keywords": ["php","mysql","pdo"],
     "homepage": "https://php-db.devcorner.io",
@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "lcloss/php-env": "^0.0.1"
+        "lcloss/env": "^0.0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "9"
