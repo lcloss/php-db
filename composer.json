@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "lcloss/env": "^0.0.1"
+        "lcloss/env": ">=0.0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "9"
