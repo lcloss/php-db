@@ -26,7 +26,6 @@ class Database
     {
         $conn = Connection::getInstance();
         if ( $conn ) {
-            xdebug_var_dump($sql);
             return $conn->exec( $sql );
         } else {
             throw new \Exception('Error on connecting to database.');

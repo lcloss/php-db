@@ -1,6 +1,12 @@
 # php-db
 Simple PHP package to manage database
 
+## Install
+
+```bash
+$ composer require lcloss/db
+```
+
 ## Requirements
 
 On root folder, create a .env file with these fields:
