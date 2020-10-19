@@ -7,6 +7,7 @@ use PDO;
 final Class Connection
 {
     private static $connection;
+    private static $data;
 
     /**
      * Singleton
@@ -73,16 +74,17 @@ final Class Connection
         }
     }
 
-    public static function getInstance(): PDO
+    public static function getInstance( $path = "", $env_file = '.env' ): PDO
     {
-        $path = implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, __DIR__ ), 0, -4 )) . DIRECTORY_SEPARATOR;
-
-        $env = Environment::getInstance('.env', $path);
-
-        $database_settings = $env->database;
-
         if ( is_null(self::$connection) ) {
-            self::$connection = self::make( $database_settings );
+            if ( empty($path) ) {
+                $path = implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, __DIR__ ), 0, -4 )) . DIRECTORY_SEPARATOR;
+            };
+            $env = Environment::getInstance('.env', $path);
+
+            $this->data = $env->database;
+
+            self::$connection = self::make( $this->data );
             self::$connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
             self::$connection->exec("set names utf8");
         }

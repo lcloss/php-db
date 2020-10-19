@@ -14,20 +14,19 @@ class ActiveRecord
     protected $table = NULL;
     protected $id_column = NULL;
     protected $sql = NULL;
-    protected $logTimestamp;
+    protected $log_timestamp;
 
     public function __construct()
     {
         $this->sql = new Sql();
 
-        if ( !is_bool( $this->logTimestamp )) {
-            $this->logTimestamp = true;
+        if ( !is_bool( $this->log_timestamp )) {
+            $this->log_timestamp = true;
         }
 
         if ( is_null( $this->table ) ) {
             $class = explode('\\', get_class($this));
-            $last = count( $class ) - 1;
-            $this->table = strtolower( $class[$last] );
+            $this->table = strtolower( array_pop($class) );
             $this->sql->setTable( $this->table );
         }
 
@@ -200,7 +199,6 @@ class ActiveRecord
     {
         $conn = Connection::getInstance();
         if ( $conn ) {
-            xdebug_var_dump($sql);
             return $conn->exec( $sql );
         } else {
             throw new \Exception('Error on connecting to database.');
