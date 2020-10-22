@@ -41,4 +41,14 @@ class Database
             throw new \Exception('Error on connecting to database.');
         }
     }
+
+    public static function databases()
+    {
+        $sql = "SHOW DATABASES;";
+
+        $stmt = self::query( $sql );
+
+        $databases = $stmt->fetchAll(PDO::FETCH_COLUMN);        
+        return $databases;
+    }
 }
