@@ -113,7 +113,7 @@ class ActiveRecord
     {
         if ( isset( $this->content[ $this->id_column ] ) ) {
             $this->sql = $this->sql->where($this->id_column, $this->content[ $this->id_column ]);
-            self::exec( $this->sql->delete()->get() );
+            return self::exec( $this->sql->delete()->get() );
         }
     }
 
@@ -129,7 +129,6 @@ class ActiveRecord
         $sql->setIdColumn( $id_column );
 
         $select_sql = $sql->where($id_column, $id)->select()->get();
-        xdebug_var_dump($select_sql);
         return self::fetchObject( $select_sql );
     }
 
@@ -151,7 +150,6 @@ class ActiveRecord
             $sql->whereRaw( $filter );
         }
         $select_sql = $sql->limit( $limit )->offset( $offset )->select()->get();
-        xdebug_var_dump($select_sql);
         return self::fetchAll( $select_sql );
     }
 
@@ -168,7 +166,6 @@ class ActiveRecord
             $sql->whereRaw( $filter );
         }
         $select_sql = $sql->count()->get();
-        xdebug_var_dump($select_sql);
         $res = self::fetch( $select_sql );
         return (int) $res['num_rows'];
     }

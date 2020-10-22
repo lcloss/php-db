@@ -28,7 +28,7 @@ final Class Connection
         $port       = $data['port'] ?? NULL;
         $user       = $data['user'] ?? NULL;
         $pass       = $data['password'] ?? NULL;
-        $dbname     = $data['db'] ?? NULL;
+        $dbname     = $data['dbname'] ?? NULL;
 
         if ( !is_null($driver) ) {
             switch( strtoupper($driver) ) {
@@ -81,10 +81,8 @@ final Class Connection
                 $path = implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, __DIR__ ), 0, -4 )) . DIRECTORY_SEPARATOR;
             };
             $env = Environment::getInstance('.env', $path);
-
-            $this->data = $env->database;
-
-            self::$connection = self::make( $this->data );
+            self::$data = $env->database;
+            self::$connection = self::make( self::$data );
             self::$connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
             self::$connection->exec("set names utf8");
         }
