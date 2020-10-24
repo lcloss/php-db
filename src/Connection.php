@@ -74,14 +74,10 @@ final Class Connection
         }
     }
 
-    public static function getInstance( $env_file = '.env' ): PDO
+    public static function getInstance(): PDO
     {
         if ( is_null(self::$connection) ) {
-            if ( $env_file == '.env' ) {
-                $path = implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, __DIR__ ), 0, -4 )) . DIRECTORY_SEPARATOR;
-                $env = Environment::getInstance('.env', $path);
-            };
-            self::$data = $env->database;
+            self::$data = env('database');
             self::$connection = self::make( self::$data );
             self::$connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
             self::$connection->exec("set names utf8");
