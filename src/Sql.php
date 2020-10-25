@@ -125,7 +125,7 @@ class SQL
         }
         $where['left'] = $left;
         $where['comp'] = $comp;
-        $where['right'] = $right;
+        $where['right'] = $this->format( $right );
         $this->wheres[] = $where;
         return $this;
     }

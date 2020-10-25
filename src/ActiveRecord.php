@@ -24,6 +24,10 @@ class ActiveRecord
             $this->log_timestamp = true;
         }
 
+        // $class = get_called_class();
+        // xdebug_var_dump($class);
+        // $table = strtolower( (new $class())->table );
+
         if ( is_null( $this->table ) ) {
             $class = explode('\\', get_class($this));
             $this->table = strtolower( array_pop($class) );
@@ -135,6 +139,18 @@ class ActiveRecord
     public static function findFirst( string $filter = '' )
     {
         return self::all( $filter, 1 );
+    }
+
+    public function where( $column, $value ) 
+    {
+        $select_sql = $this->sql->where( $column, $value );
+        return $this;
+    }
+
+    public function get()
+    {
+        $select_sql = $this->sql->select()->get();
+        return self::fetchAll( $select_sql );
     }
 
     public static function all( string $filter = '', int $limit = 0, int $offset = 0)
