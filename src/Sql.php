@@ -61,6 +61,10 @@ class SQL
 
     public function select()
     {
+        foreach( $this->wheres as $i => $where ) {
+            $this->wheres[$i]['right'] = $this->format($where['right']);
+        }
+
         $this->sql = "SELECT * FROM {$this->table} " . $this->getWhere();
         $this->sql .= ( $this->limit > 0 ) ? " LIMIT {$this->limit}" : "";
         $this->sql .= ( $this->offset > 0 ) ? " OFFSET {$this->offset}" : "";
@@ -71,6 +75,10 @@ class SQL
 
     public function delete()
     {
+        foreach( $this->wheres as $i => $where ) {
+            $this->wheres[$i]['right'] = $this->format($where['right']);
+        }
+
         $this->sql = "DELETE FROM {$this->table} " . $this->getWhere() . ";";
         return $this;
     }
@@ -125,8 +133,8 @@ class SQL
         }
         $where['left'] = $left;
         $where['comp'] = $comp;
-        $where['right'] = $this->encapsulate($right);
-        // $where['right'] = $right;
+        // $where['right'] = $this->encapsulate($right);
+        $where['right'] = $right;
         $this->wheres[] = $where;
         return $this;
     }
@@ -194,7 +202,7 @@ class SQL
     {
         if ( is_numeric($value) ) {
             return $value;
-            
+
         } elseif ( is_string($value) ) {
             return "'" . addslashes($value) . "'";
 
