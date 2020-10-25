@@ -100,7 +100,7 @@ class SQL
         }
 
         foreach( $this->wheres as $where_cond ) {
-            $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " " . $where_cond['comp'] . " " . $where_cond['right'] . $where_cond['close']);
+            $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " " . $where_cond['comp'] . " " . $where_cond['right'] . " " . $where_cond['close']);
         }
         if ( !empty($this->whereRaw) )
         {
@@ -125,7 +125,8 @@ class SQL
         }
         $where['left'] = $left;
         $where['comp'] = $comp;
-        $where['right'] = $this->format( $right );
+        $where['right'] = $this->encapsulate($right);
+        // $where['right'] = $right;
         $this->wheres[] = $where;
         return $this;
     }
@@ -175,6 +176,7 @@ class SQL
     {
         if (is_string($value) && !empty($value)) {
             return "'" . addslashes($value) . "'";
+            // return addslashes($value);
 
         } else if (is_bool($value)) {
             return $value ? 'TRUE' : 'FALSE';
@@ -188,12 +190,31 @@ class SQL
         }
     }
 
+    private function encapsulate( $value )
+    {
+        if (is_string($value)) {
+            return "'" . addslashes($value) . "'";
+
+        // if (is_string($value) && !empty($value)) {
+        //     return "'" . $value . "'";
+
+        // } elseif (is_string($value) && empty($value)) {
+        //     return "NULL";
+    
+        } else  {
+            return $value;
+
+        }
+    }
+
     private function convertPairs( $sets )
     {
         $newPairs = [];
         foreach ( $sets as $key => $value ) {
-            if (is_scalar($value)) {
+            if ( is_scalar($value) ) {
                 $newPairs[$key] = $this->format($value);
+            // } else {
+            //     $newPairs[$key] = $value;
             }
         }
         return $newPairs;
