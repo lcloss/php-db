@@ -10,7 +10,7 @@ class ActiveRecord
 {
     private static $connection;
 
-    private $content = [];
+    private $data = [];
     protected $table = NULL;
     protected $id_column = NULL;
     protected $sql = NULL;
@@ -52,52 +52,52 @@ class ActiveRecord
 
     public function __set( $param, $value ) 
     {
-        $this->content[$param] = $value;
+        $this->data[$param] = $value;
     }
 
     public function __get( $param )
     {
-        return $this->content[$param];
+        return $this->data[$param];
     }
 
     public function __isset( $param )
     {
-        return isset( $this->content['param'] );
+        return isset( $this->data['param'] );
     }
 
     public function __unset( $param ) 
     {
         if ( isset( $param ) ) {
-            unset( $this->content[$param] );
+            unset( $this->data[$param] );
             return true;
         }
         return false;
     }
     private function ___clone()
     {
-        if ( isset($this->content[ $this->id_column ])) {
-            unset($this->content[ $this->id_column ]);
+        if ( isset($this->data[ $this->id_column ])) {
+            unset($this->data[ $this->id_column ]);
         }
     }
 
     public function toArray()
     {
-        return $this->content;
+        return $this->data;
     }
 
     public function fromArray( array $array ) 
     {
-        $this->content = $array;
+        $this->data = $array;
     }
 
     public function toJson()
     {
-        return json_encode( $this->content );
+        return json_encode( $this->data );
     }
 
     public function fromJson( string $json )
     {
-        $this->content = json_decode( $json );
+        $this->data = json_decode( $json );
     }
 
     public function save()
@@ -105,18 +105,18 @@ class ActiveRecord
         if ( $this->log_timestamp === true ) {
             $this->updated_at = date('Y-m-d H:i:s');
 
-            if ( !array_key_exists( $this->id_column, $this->content ) ) {
+            if ( !array_key_exists( $this->id_column, $this->data ) ) {
                 $this->created_at = date('Y-m-d H:i:s');
             }
         }
-        $this->sql->setPairs( $this->content );
+        $this->sql->setPairs( $this->data );
         return self::exec( $this->sql->save() );
     }
 
     public function delete()
     {
-        if ( isset( $this->content[ $this->id_column ] ) ) {
-            $this->sql = $this->sql->where($this->id_column, $this->content[ $this->id_column ]);
+        if ( isset( $this->data[ $this->id_column ] ) ) {
+            $this->sql = $this->sql->where($this->id_column, $this->data[ $this->id_column ]);
             return self::exec( $this->sql->delete()->get() );
         }
     }

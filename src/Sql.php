@@ -174,7 +174,7 @@ class SQL
 
     private function format( $value )
     {
-        if (is_string($value) && !empty($value)) {
+        if ( is_string($value) && !empty($value) ) {
             return "'" . addslashes($value) . "'";
             // return addslashes($value);
 
@@ -192,7 +192,10 @@ class SQL
 
     private function encapsulate( $value )
     {
-        if (is_string($value)) {
+        if ( is_numeric($value) ) {
+            return $value;
+            
+        } elseif ( is_string($value) ) {
             return "'" . addslashes($value) . "'";
 
         // if (is_string($value) && !empty($value)) {
