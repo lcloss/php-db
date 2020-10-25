@@ -13,12 +13,12 @@
             "role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "LCloss\\DB\\": "src/"
         }
     },
+    "minimum-stability": "stable",
     "require": {
         "lcloss/env": "dev-release/0.0.1"
     },
