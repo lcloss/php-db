@@ -147,6 +147,12 @@ class ActiveRecord
         return $this;
     }
 
+    public function whereNot( $column, $value ) 
+    {
+        $select_sql = $this->sql->whereNot( $column, $value );
+        return $this;
+    }
+
     public function get()
     {
         $select_sql = $this->sql->select()->get();

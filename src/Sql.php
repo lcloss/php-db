@@ -113,7 +113,7 @@ class SQL
         return $where;
     }
 
-    public function where($left, $right, $open = "(", $oper = "AND", $comp = "=", $close = ")")
+    public function where($left, $right, $oper = "AND", $comp = "=", $open = "(", $close = ")")
     {
         $where = [];
         $where['open'] = $open;
@@ -150,6 +150,12 @@ class SQL
     public function whereLike($left, $right, $oper = "AND")
     {
         $this->where($left, $right, $oper, "LIKE");
+        return $this;
+    }
+
+    public function whereNot($left, $right)
+    {
+        $this->where($left, $right, "AND", "<>");
         return $this;
     }
 
