@@ -15,6 +15,8 @@ class ActiveRecord
     protected $id_column = NULL;
     protected $sql = NULL;
     protected $log_timestamp;
+    protected $soft_deletes;
+    protected $select_deleted;
 
     public function __construct()
     {
@@ -23,10 +25,12 @@ class ActiveRecord
         if ( !is_bool( $this->log_timestamp )) {
             $this->log_timestamp = true;
         }
-
-        // $class = get_called_class();
-        // xdebug_var_dump($class);
-        // $table = strtolower( (new $class())->table );
+        if ( !is_bool( $this->soft_deletes )) {
+            $this->soft_deletes = false;
+        }
+        if ( !is_bool( $this->select_deleted )) {
+            $this->select_deleted = false;
+        }
 
         if ( is_null( $this->table ) ) {
             $class = explode('\\', get_class($this));
@@ -124,8 +128,13 @@ class ActiveRecord
     public function delete()
     {
         if ( isset( $this->data[ $this->id_column ] ) ) {
-            $this->sql = $this->sql->where($this->id_column, $this->data[ $this->id_column ]);
-            return self::exec( $this->sql->delete()->get() );
+            if ( $this->soft_deletes === true ) {
+                $this->deleted_at = date('Y-m-d H:i:s');
+                $this->save();
+            } else {
+                $this->sql = $this->sql->where($this->id_column, $this->data[ $this->id_column ]);
+                return self::exec( $this->sql->delete()->get() );
+            }
         }
     }
 
@@ -163,6 +172,12 @@ class ActiveRecord
 
     public function get()
     {
+        if ( $this->soft_deletes === true ) {
+            if ( $this->select_deleted === false ) {
+                $sql = $sql->where('deleted_at', NULL);
+            }
+        }
+        
         $select_sql = $this->sql->select()->get();
         return self::fetchAll( $select_sql );
     }

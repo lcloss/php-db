@@ -286,11 +286,17 @@ class Database
     public static function databases()
     {
         $sql = "SHOW DATABASES;";
-
         $stmt = self::query( $sql );
 
-        $databases = $stmt->fetchAll(PDO::FETCH_COLUMN);        
-        return $databases;
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);        
+    }
+
+    public static function tables( $database )
+    {
+        $sql = "SHOW TABLES FROM " . $database . ";";
+        $stmt = self::query( $sql );
+
+        return $stmt->fetchAll();
     }
 
     public static function getCollates()
