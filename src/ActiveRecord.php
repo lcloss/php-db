@@ -110,7 +110,15 @@ class ActiveRecord
             }
         }
         $this->sql->setPairs( $this->data );
-        return self::exec( $this->sql->save() );
+        $res = self::exec( $this->sql->save() );
+
+        // If INSERT, update id
+        if ( substr( $this->sql->save(), 0, strlen('INSERT') ) == 'INSERT' ) {
+            $conn = Connection::getInstance();
+            $this->data[ $this->id_column ] = $conn->lastInsertId();
+        }
+
+        return $res;
     }
 
     public function delete()

@@ -3,6 +3,7 @@ namespace LCloss\DB;
 
 use LCloss\Env\Environment;
 use PDO;
+use PDOException;
 
 final Class Connection
 {
@@ -21,7 +22,7 @@ final Class Connection
     /**
      * Make a connection string and generate PDO object
      */
-    private static function make( array $data )
+    private static function make( array $data ): PDO
     {
         $driver     = $data['driver'] ?? "mysql";
         $server     = $data['server'] ?? "localhost";
