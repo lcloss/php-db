@@ -114,15 +114,26 @@ class ActiveRecord
             }
         }
         $this->sql->setPairs( $this->data );
+        $sql = $this->sql->save();
         $res = self::exec( $this->sql->save() );
 
         // If INSERT, update id
-        if ( substr( $this->sql->save(), 0, strlen('INSERT') ) == 'INSERT' ) {
+        if ( $this->wasInserted() ) {
             $conn = Connection::getInstance();
             $this->data[ $this->id_column ] = $conn->lastInsertId();
         }
 
         return $res;
+    }
+
+    public function wasInserted() 
+    {
+        // Check SQL if it was an Insert
+        if ( substr( $this->sql->get(), 0, strlen('INSERT') ) == 'INSERT' ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function select()
@@ -279,5 +290,11 @@ class ActiveRecord
             $q = $p->fetch( PDO::FETCH_ASSOC );
             return $q;
         }
+    }
+
+    public static function lastInsertId()
+    {
+        $conn = Connection::getInstance();
+        return $conn->lastInsertId();
     }
 }
