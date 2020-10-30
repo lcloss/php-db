@@ -125,6 +125,18 @@ class ActiveRecord
         return $res;
     }
 
+    public function select()
+    {
+        $this->sql = $this->sql->select();
+        return $this;
+    }
+
+    public function orderBy( $column, $direction = 'ASC')
+    {
+        $this->sql = $this->sql->orderBy( $column, $direction );
+        return $this;
+    }
+
     public function delete()
     {
         if ( isset( $this->data[ $this->id_column ] ) ) {

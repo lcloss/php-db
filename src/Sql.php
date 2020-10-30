@@ -9,6 +9,7 @@ class SQL
     protected $pairs = [];
     protected $wheres = [];
     protected $whereRaw = "";
+    protected $orderBy = "";
     protected $sql = "";
     protected $limit = 0;
     protected $offset = 0;
@@ -66,10 +67,13 @@ class SQL
         }
 
         $this->sql = "SELECT * FROM {$this->table} " . $this->getWhere();
+        if ( $this->orderBy != "" ) {
+            $this->sql .= " ORDER BY " . $this->orderBy;
+        }
         $this->sql .= ( $this->limit > 0 ) ? " LIMIT {$this->limit}" : "";
         $this->sql .= ( $this->offset > 0 ) ? " OFFSET {$this->offset}" : "";
         $this->sql .= ";";
-
+        
         return $this;
     }
 
@@ -165,6 +169,15 @@ class SQL
     public function whereNot($left, $right)
     {
         $this->where($left, $right, "AND", "<>");
+        return $this;
+    }
+
+    public function orderBy( $column, $direction = 'ASC' )
+    {
+        if ( $this->orderBy != "" ) {
+            $this->orderBy .= ", ";
+        }
+        $this->orderBy .= $column . " " . $direction;
         return $this;
     }
 
