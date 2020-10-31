@@ -140,7 +140,7 @@ class ActiveRecord
     {
         return $this->soft_deletes;
     }
-    
+
     public function select()
     {
         $this->sql = $this->sql->select();
@@ -157,12 +157,20 @@ class ActiveRecord
     {
         if ( isset( $this->data[ $this->id_column ] ) ) {
             if ( $this->soft_deletes === true ) {
-                $this->deleted_at = date('Y-m-d H:i:s');
+                $this->deleted_at = date("Y-m-d H:i:s");
                 $this->save();
             } else {
                 $this->sql = $this->sql->where($this->id_column, $this->data[ $this->id_column ]);
                 return self::exec( $this->sql->delete()->get() );
             }
+        }
+    }
+
+    public function remove()
+    {
+        if ( isset( $this->data[ $this->id_column ] ) ) {
+            $this->sql = $this->sql->where($this->id_column, $this->data[ $this->id_column ]);
+            return self::exec( $this->sql->delete()->get() );
         }
     }
 
