@@ -136,6 +136,11 @@ class ActiveRecord
         }
     }
 
+    public function softDeletes() 
+    {
+        return $this->soft_deletes;
+    }
+    
     public function select()
     {
         $this->sql = $this->sql->select();
