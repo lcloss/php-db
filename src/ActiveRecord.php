@@ -210,7 +210,7 @@ class ActiveRecord
     {
         if ( $this->soft_deletes === true ) {
             if ( $this->select_deleted === false ) {
-                $sql = $sql->where('deleted_at', NULL);
+                $this->sql = $this->sql->where('deleted_at', NULL);
             }
         }
         
