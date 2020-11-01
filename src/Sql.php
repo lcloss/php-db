@@ -112,7 +112,14 @@ class SQL
         }
 
         foreach( $this->wheres as $where_cond ) {
-            $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " " . $where_cond['comp'] . " " . $where_cond['right'] . " " . $where_cond['close']);
+            if ( $where_cond['comp'] == '=' && is_null($where_cond['right']) ) {
+                $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " IS NULL " . $where_cond['close']);
+            } elseif ( $where_cond['comp'] == '<>' && is_null($where_cond['right']) ) {
+                $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " IS NOT NULL " . $where_cond['close']);
+            } else {
+                $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " " . $where_cond['comp'] . " " . $where_cond['right'] . " " . $where_cond['close']);
+            }
+            
         }
         if ( !empty($this->whereRaw) )
         {
