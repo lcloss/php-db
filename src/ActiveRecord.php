@@ -218,7 +218,7 @@ class ActiveRecord
         return self::fetchAll( $select_sql );
     }
 
-    public static function all( string $filter = '', int $limit = 0, int $offset = 0)
+    public static function all( string $filter = '', int $limit = 0, int $offset = 0 )
     {
         $sql = new Sql();
 
