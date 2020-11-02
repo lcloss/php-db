@@ -128,7 +128,11 @@ class SQL
             $this->wheres[0]['close'] = "";
         }
 
+        $count = 0;
         foreach( $this->wheres as $where_cond ) {
+            if ( $count > 0 && $where_cond['oper'] == "" ) {
+                $where_cond['oper'] = 'AND';
+            }
             if ( $where_cond['comp'] == '=' && is_null($where_cond['right']) ) {
                 $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " IS NULL " . $where_cond['close']);
             } elseif ( $where_cond['comp'] == '<>' && is_null($where_cond['right']) ) {
@@ -136,7 +140,7 @@ class SQL
             } else {
                 $where .= " " . trim($where_cond['oper'] . " " . $where_cond['open'] . $where_cond['left'] . " " . $where_cond['comp'] . " " . $where_cond['right'] . " " . $where_cond['close']);
             }
-            
+            $count++;
         }
         if ( !empty($this->whereRaw) )
         {
