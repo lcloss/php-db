@@ -77,6 +77,23 @@ class SQL
         return $this;
     }
 
+    public function customSelect( string $select )
+    {
+        foreach( $this->wheres as $i => $where ) {
+            $this->wheres[$i]['right'] = $this->format($where['right']);
+        }
+
+        $this->sql = "SELECT " . $select . " FROM {$this->table} " . $this->getWhere();
+        if ( $this->orderBy != "" ) {
+            $this->sql .= " ORDER BY " . $this->orderBy;
+        }
+        $this->sql .= ( $this->limit > 0 ) ? " LIMIT {$this->limit}" : "";
+        $this->sql .= ( $this->offset > 0 ) ? " OFFSET {$this->offset}" : "";
+        $this->sql .= ";";
+        
+        return $this;
+    }
+
     public function delete()
     {
         foreach( $this->wheres as $i => $where ) {

@@ -147,6 +147,12 @@ class ActiveRecord
         return $this;
     }
 
+    public function customSelect( string $select )
+    {
+        $this->sql = $this->sql->customSelect( $select );
+        return $this;
+    }
+
     public function orderBy( $column, $direction = 'ASC')
     {
         $this->sql = $this->sql->orderBy( $column, $direction );
@@ -220,6 +226,28 @@ class ActiveRecord
         }
         
         $select_sql = $this->sql->select()->get();
+        return self::fetchAll( $select_sql );
+    }
+
+    public static function customAll( string $select, string $filter = '', int $limit = 0, int $offset = 0 )
+    {
+        $sql = new Sql();
+
+        $class = get_called_class();
+        $table = (new $class())->table;
+
+        $sql->setTable( $table );
+
+        if ( !empty($filter) ) {
+            $sql->whereRaw( $filter );
+        }
+
+        if ( $this->soft_deletes && !$this->select_deleted ) {
+            $select_sql = $sql->where('deleted_at', NULL)->limit( $limit )->offset( $offset )->customSelect( $select )->get();
+        } else {
+            $select_sql = $sql->limit( $limit )->offset( $offset )->customSelect( $select )->get();
+        }
+        
         return self::fetchAll( $select_sql );
     }
 
