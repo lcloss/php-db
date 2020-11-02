@@ -185,7 +185,12 @@ class ActiveRecord
         $sql->setTable( $table );
         $sql->setIdColumn( $id_column );
 
-        $select_sql = $sql->where($id_column, $id)->select()->get();
+        if ( $this->soft_deletes && !$this->select_deleted ) {
+            $select_sql = $sql->where($id_column, $id)->where('deleted_at', NULL)->select()->get();
+        } else {
+            $select_sql = $sql->where($id_column, $id)->select()->get();
+        }
+        
         return self::fetchObject( $select_sql );
     }
 
@@ -230,7 +235,13 @@ class ActiveRecord
         if ( !empty($filter) ) {
             $sql->whereRaw( $filter );
         }
-        $select_sql = $sql->limit( $limit )->offset( $offset )->select()->get();
+
+        if ( $this->soft_deletes && !$this->select_deleted ) {
+            $select_sql = $sql->where('deleted_at', NULL)->limit( $limit )->offset( $offset )->select()->get();
+        } else {
+            $select_sql = $sql->limit( $limit )->offset( $offset )->select()->get();
+        }
+        
         return self::fetchAll( $select_sql );
     }
 
