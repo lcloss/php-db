@@ -130,7 +130,7 @@ class SQL
 
         $count = 0;
         foreach( $this->wheres as $where_cond ) {
-            if ( $count > 0 && $where_cond['oper'] == "" ) {
+            if ( $count > 0 && empty($where_cond['oper']) ) {
                 $where_cond['oper'] = 'AND';
             }
             if ( $where_cond['comp'] == '=' && is_null($where_cond['right']) ) {
