@@ -123,6 +123,11 @@ class SQL
     public function getWhere()
     {
         $where = "";
+        if ( !empty($this->whereRaw) )
+        {
+            $where .= " " . $this->whereRaw;
+        }
+
         if ( count( $this->wheres ) == 1 ) {
             $this->wheres[0]['open'] = "";
             $this->wheres[0]['close'] = "";
@@ -142,10 +147,6 @@ class SQL
             }
             $count++;
         }
-        if ( !empty($this->whereRaw) )
-        {
-            $where .= " " . $this->whereRaw;
-        }
         if ( !empty($where) ) {
             $where = "WHERE " . trim($where);
         }
@@ -158,7 +159,7 @@ class SQL
         $where = [];
         $where['open'] = $open;
         $where['close'] = $close;
-        if ( count($this->wheres) > 0 ) {
+        if ( count($this->wheres) > 0  || !empty($this->whereRaw) ) {
             $where['oper'] = $oper;
         } else {
             $where['oper'] = "";
