@@ -218,6 +218,12 @@ class ActiveRecord
         return $this;
     }
 
+    public function whereRaw( $filter )
+    {
+        $this->sql->whereRaw( $filter );
+        return $this;
+    }
+
     public function get()
     {
         if ( $this->soft_deletes === true ) {
